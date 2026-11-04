@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#12a66a">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="serve">
+<title>serve — Un coup de main, tout simplement</title>
+<style>
+:root{--green:#12a66a;--dark:#123b2b;--ink:#17231d;--muted:#718078;--bg:#f5f8f6;--line:#e5ece8;--white:#fff;--orange:#ffb547}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button,input,textarea,select{font:inherit}button{cursor:pointer;border:0}
+.top{background:var(--green);color:white;padding:17px 20px 22px;border-radius:0 0 25px 25px}
+.nav{display:flex;justify-content:space-between;align-items:center;max-width:850px;margin:auto}
+.logo{font-size:29px;font-weight:850;letter-spacing:-1.7px}.tag{font-size:12px;opacity:.9}
+.avatar{border:1px solid #ffffff70;border-radius:30px;padding:8px 12px;font-size:12px}
+main{max-width:850px;margin:0 auto;padding:20px 16px 100px}
+h1{font-size:27px;line-height:1.12;letter-spacing:-.8px;margin:16px 0 8px}
+.sub{color:var(--muted);font-size:14px;margin:0 0 18px}
+.rolebar{display:flex;background:#e9f0ec;padding:4px;border-radius:14px;margin:15px 0 20px}
+.rolebar button{flex:1;padding:11px 7px;border-radius:11px;background:transparent;color:#526158;font-weight:700;font-size:13px}
+.rolebar button.active{background:white;color:var(--dark);box-shadow:0 2px 8px #153c2b12}
+.search{display:flex;gap:8px;background:white;padding:12px;border:1px solid var(--line);border-radius:15px;align-items:center;margin-bottom:18px}
+.search input{border:0;outline:0;flex:1;min-width:0}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.cat{background:white;border:1px solid var(--line);border-radius:16px;padding:14px 10px;text-align:left;min-height:95px;box-shadow:0 3px 10px #173b2910}
+.cat .emoji{font-size:24px;display:block;margin-bottom:8px}.cat b{font-size:13px}.cat small{display:block;color:var(--muted);font-size:11px;margin-top:3px}
+.section{display:flex;justify-content:space-between;align-items:center;margin:24px 0 12px}
+.section h2{font-size:17px;margin:0}.hint{font-size:12px;color:var(--muted)}
+.card{background:white;border:1px solid var(--line);border-radius:17px;padding:15px;margin:10px 0;box-shadow:0 3px 12px #173b2909}
+.row{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.title{font-weight:750;font-size:15px}.meta{color:var(--muted);font-size:12px;margin-top:5px}
+.price{font-weight:850;color:var(--dark);font-size:18px;white-space:nowrap}
+.pill{display:inline-block;background:#e8f7ef;color:#087d4a;padding:5px 9px;border-radius:30px;font-size:11px;font-weight:750;margin-top:10px}
+.btn{background:var(--green);color:white;padding:13px 16px;border-radius:13px;font-weight:750;width:100%;margin-top:12px}
+.btn.secondary{background:#eaf4ee;color:var(--dark)}.btn.dark{background:var(--dark)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.field{margin:13px 0}.field label{display:block;font-size:12px;font-weight:750;margin-bottom:6px}
+.field input,.field textarea,.field select{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px;background:white;outline-color:var(--green)}
+.field textarea{min-height:85px;resize:vertical}
+.note{background:#fff7e8;border:1px solid #ffe3b0;padding:12px;border-radius:12px;font-size:12px;color:#73521d;line-height:1.45;margin:12px 0}
+.success{background:#e8f7ef;border:1px solid #bde9d0;color:#12643e;padding:13px;border-radius:12px;font-size:13px}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:#ffffffed;backdrop-filter:blur(12px);border-top:1px solid var(--line);display:flex;justify-content:center;gap:25px;padding:12px 10px calc(12px + env(safe-area-inset-bottom));z-index:5}
+.bottom button{background:none;color:#68766e;font-size:11px;font-weight:700}.bottom button span{display:block;font-size:19px;margin-bottom:2px}
+.hidden{display:none!important}.back{background:none;color:var(--green);font-weight:750;padding:5px 0 12px}
+.steps{display:flex;gap:7px;margin:12px 0}.steps i{height:5px;flex:1;border-radius:5px;background:#dce8e0}.steps i.on{background:var(--green)}
+hr{border:0;border-top:1px solid var(--line);margin:14px 0}
+@media(min-width:650px){.grid{grid-template-columns:repeat(3,1fr)}main{padding-top:28px}.hero{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center}}
+</style>
+</head>
+<body>
+<header class="top"><div class="nav"><div><div class="logo">serve<span style="color:#c8ffe0">.</span></div><div class="tag">Un coup de main, tout simplement.</div></div><div class="avatar">📍 Bruxelles · BE</div></div></header>
+<main>
+<div id="home">
+  <h1>Qu’est-ce qu’on peut faire pour vous ?</h1><p class="sub">Un petit service près de chez vous, en quelques minutes.</p>
+  <div class="rolebar"><button id="needTab" class="active" onclick="setRole('need')">🙋 J’ai besoin d’aide</button><button id="giveTab" onclick="setRole('give')">🤝 Je rends service</button></div>
+  <div id="needView">
+    <div class="search">🔎 <input id="quick" placeholder="Ex. : récupérer mon colis, acheter du lait…"><button onclick="quickSearch()" style="background:none;color:var(--green);font-weight:800">OK</button></div>
+    <div class="grid">
+      <button class="cat" onclick="prefill('Courses','Acheter du lait et me le déposer')"><span class="emoji">🥛</span><b>Courses</b><small>Lait, pain, petits achats</small></button>
+      <button class="cat" onclick="prefill('Colis','Récupérer mon colis')"><span class="emoji">📦</span><b>Colis</b><small>Récupérer ou déposer</small></button>
+      <button class="cat" onclick="prefill('Maison','Monter un meuble')"><span class="emoji">🪛</span><b>Maison</b><small>Montage, petits coups de main</small></button>
+      <button class="cat" onclick="prefill('Animaux','Promener mon chien')"><span class="emoji">🐕</span><b>Animaux</b><small>Promenade, visite</small></button>
+      <button class="cat" onclick="prefill('Livraison','Déposer un objet à une adresse')"><span class="emoji">🛍️</span><b>Livraison</b><small>Un objet à déplacer</small></button>
+      <button class="cat" onclick="prefill('Autre','')"><span class="emoji">✨</span><b>Autre</b><small>Décrivez votre besoin</small></button>
+    </div>
+    <div class="section"><h2>Demandes près de vous</h2><span class="hint">Exemple de démonstration</span></div>
+    <div id="requests"></div>
+    <button class="btn" onclick="openRequest()">＋ Publier une demande</button>
+  </div>
+  <div id="giveView" class="hidden">
+    <div class="success">Bienvenue dans l’espace prestataire. Parcourez les petits services proposés à Bruxelles et choisissez ceux qui vous conviennent.</div>
+    <div class="section"><h2>À proximité</h2><span class="hint">Bruxelles · démo</span></div>
+    <div id="jobs"></div>
+    <button class="btn" onclick="openKyc()">Créer mon profil prestataire</button>
+    <p class="hint">En production, l’accès aux missions nécessitera une vérification d’identité.</p>
+  </div>
+</div>
+<div id="requestPage" class="hidden">
+  <button class="back" onclick="goHome()">← Retour</button><h1>Publier un service</h1><p class="sub">Expliquez ce dont vous avez besoin. Le prix du service est plafonné à 100 €.</p>
+  <div class="field"><label>Catégorie</label><select id="category"><option>Courses</option><option>Colis</option><option>Maison</option><option>Animaux</option><option>Livraison</option><option>Autre</option></select></div>
+  <div class="field"><label>Que faut-il faire ?</label><textarea id="description" placeholder="Ex. : acheter 2 litres de lait et me les apporter…"></textarea></div>
+  <div class="field"><label>Adresse / quartier</label><input id="address" placeholder="Ex. : Ixelles, avenue Louise…"></div>
+  <div class="field"><label>Votre prix pour le service (€)</label><input id="amount" type="number" min="1" max="100" value="8"></div>
+  <div class="field"><label>Adresse e-mail</label><input id="email" type="email" placeholder="vous@exemple.be"></div>
+  <div class="note">Le prix affiché concerne la rémunération du service. Le coût des achats éventuels doit être indiqué séparément et justifié par un ticket. Plafond du service : 100 €.</div>
+  <button class="btn" onclick="publish()">Publier ma demande</button>
+</div>
+<div id="kycPage" class="hidden">
+  <button class="back" onclick="goHome()">← Retour</button><h1>Devenir prestataire</h1><p class="sub">Quelques informations pour sécuriser la communauté serve.</p>
+  <div class="field"><label>Nom et prénom</label><input placeholder="Votre nom complet"></div>
+  <div class="field"><label>Adresse e-mail</label><input type="email" placeholder="vous@exemple.be"></div>
+  <div class="field"><label>Numéro de téléphone</label><input type="tel" placeholder="+32 …"></div>
+  <div class="field"><label>Pièce d’identité</label><input type="file" accept="image/*,.pdf"></div>
+  <div class="field"><label>Photo selfie de vérification</label><input type="file" accept="image/*"></div>
+  <div class="note">Prototype uniquement : aucun document n’est envoyé ni stocké. En production, l’identité sera vérifiée par un prestataire KYC sécurisé, avec consentement et règles RGPD.</div>
+  <button class="btn" onclick="alert('Démo : le parcours KYC sera connecté au prestataire de vérification dans la version sécurisée.')">Continuer la vérification</button>
+</div>
+<div id="detailPage" class="hidden">
+  <button class="back" onclick="goHome()">← Retour</button><div id="detail"></div>
+</div>
+<div id="walletPage" class="hidden">
+  <button class="back" onclick="goHome()">← Retour</button><h1>Mon activité</h1>
+  <div class="card"><div class="meta">Commission serve</div><div class="price">10 %</div><hr><div class="meta">Exemple : service à 10 €</div><div class="row"><span>Prestataire reçoit (avant autres frais éventuels)</span><b>9,00 €</b></div><div class="row"><span>Commission serve</span><b>1,00 €</b></div></div>
+  <div class="note">Les paiements réels, Apple Pay, cartes et versements ne sont pas activés dans ce prototype.</div>
+</div>
+</main>
+<nav class="bottom"><button onclick="goHome()"><span>⌂</span>Accueil</button><button onclick="setRole('give');goHome()"><span>🤝</span>Services</button><button onclick="showWallet()"><span>▣</span>Activité</button><button onclick="alert('Profil de démonstration')"><span>☺</span>Profil</button></nav>
+<script>
+let role='need', own=[];
+const demo=[
+ {cat:'Courses',desc:'Acheter du lait et du pain et me les déposer',place:'Ixelles · à 700 m',price:7,time:'Dès que possible'},
+ {cat:'Colis',desc:'Récupérer un petit colis au point relais',place:'Saint-Gilles · à 1,2 km',price:9,time:'Dans l’heure'},
+ {cat:'Maison',desc:'Donner un coup de main pour monter une petite étagère',place:'Etterbeek · à 1,8 km',price:18,time:'Cet après-midi'}
+];
+function setRole(r){role=r;document.getElementById('needTab').classList.toggle('active',r==='need');document.getElementById('giveTab').classList.toggle('active',r==='give');document.getElementById('needView').classList.toggle('hidden',r!=='need');document.getElementById('giveView').classList.toggle('hidden',r!=='give');}
+function cards(){let data=[...own,...demo];document.getElementById('requests').innerHTML=data.slice(0,3).map((x,i)=>`<div class="card"><div class="row"><div><div class="title">${x.cat}</div><div class="meta">${x.desc}</div><div class="meta">📍 ${x.place||'Bruxelles'}</div><span class="pill">● ${x.time||'Nouvelle demande'}</span></div><div class="price">${x.price} €</div></div></div>`).join('');
+document.getElementById('jobs').innerHTML=data.map((x,i)=>`<div class="card"><div class="row"><div><div class="title">${x.cat}</div><div class="meta">${x.desc}</div><div class="meta">📍 ${x.place||'Bruxelles'}</div><span class="pill">Disponible</span></div><div class="price">${x.price} €</div></div><button class="btn secondary" onclick="accept(${i})">Voir / accepter</button></div>`).join('');}
+function hideAll(){['home','requestPage','kycPage','detailPage','walletPage'].forEach(id=>document.getElementById(id).classList.add('hidden'))}
+function goHome(){hideAll();document.getElementById('home').classList.remove('hidden')}
+function openRequest(){hideAll();document.getElementById('requestPage').classList.remove('hidden')}
+function openKyc(){hideAll();document.getElementById('kycPage').classList.remove('hidden')}
+function showWallet(){hideAll();document.getElementById('walletPage').classList.remove('hidden')}
+function prefill(c,d){openRequest();document.getElementById('category').value=c;document.getElementById('description').value=d}
+function quickSearch(){let v=document.getElementById('quick').value;prefill('Autre',v)}
+function publish(){let d=document.getElementById('description').value.trim(),a=Number(document.getElementById('amount').value),e=document.getElementById('email').value.trim();if(!d||!e.includes('@')||a<=0||a>100){alert('Ajoutez une description, un e-mail valide et un prix entre 1 et 100 €.');return}own.unshift({cat:document.getElementById('category').value,desc:d,place:document.getElementById('address').value||'Bruxelles',price:a,time:'Nouvelle demande'});cards();goHome();setRole('need');alert('Demande publiée dans cette démonstration !')}
+function accept(i){let d=[...own,...demo][i];hideAll();document.getElementById('detailPage').classList.remove('hidden');document.getElementById('detail').innerHTML=`<div class="card"><div class="title">${d.cat}</div><p>${d.desc}</p><div class="meta">📍 ${d.place}</div><div class="price" style="margin-top:12px">${d.price} €</div><span class="pill">Demande disponible</span><hr><div class="note">Dans la version réelle, l’acceptation déclenchera une réservation du paiement, puis un suivi de mission et une confirmation de livraison.</div><button class="btn" onclick="alert('Démo : mission acceptée ! Le paiement réel sera intégré via Stripe Connect.')">Accepter la mission</button></div>`}
+cards();
+</script>
+<script>if ("serviceWorker" in navigator) { window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(()=>{})); }</script>
+</body></html>
